@@ -124,8 +124,6 @@ struct input* initCommandStruct(char *buffer)
 	return command;
 }
 
-/*	TODO: When this command is run, your shell must kill any other processes or jobs
-		   that your shell has started before it terminates itself.	*/
 /*	Built in command. Exit the shell.
 *	params:				none
 *	preconditions:		command struct points here
@@ -133,12 +131,12 @@ struct input* initCommandStruct(char *buffer)
 *	return: 			none
 */
 void exit_shell() { 
-	for(int i = 0; i < 200; i++) { 
+	for(int i = 0; i < 200; i++) { // Kill background processes
 		if(BG_PROCESSES[i] != -5) { 
 			kill(BG_PROCESSES[i],SIGTERM);
 			BG_PROCESSES[i] = -5;
 		} 
-	}  // TODO: <===============<<<<<<<<<<<	
+	} 
 	exit(0);
 }
 
@@ -268,7 +266,7 @@ void Execute(struct input *command, int processStatus)
 		if(command->bg_process == 1 && BG_PROCESS_ALLOWED != 0) {			// Print background pid
 			printf("background pid is %d\n", spawnPid); fflush(stdout);
 			spawnPid = waitpid(spawnPid, &processStatus, WNOHANG);			// Don't wait for the process to return
-			for(int i = 0; i < 200; i++) { if(BG_PROCESSES[i] != -5) { BG_PROCESSES[i] = spawnPid;} }  // TODO: <===============<<<<<<<<<<<
+			for(int i = 0; i < 200; i++) { if(BG_PROCESSES[i] != -5) { BG_PROCESSES[i] = spawnPid;} } // keep track of background process and add to array
 		}
 		else {
 			spawnPid = waitpid(spawnPid, &processStatus, 0);				// Wait for foreground process to return

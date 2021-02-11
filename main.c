@@ -35,7 +35,7 @@
 
 int main(int argc, char* argv[])
 {   
-    for(int i = 0; i < 200; i++) // init to zero
+    for(int i = 0; i < 200; i++) // init to non-zero
         BG_PROCESSES[i] = -5;	
 
     // ref. modules
