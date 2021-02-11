@@ -1,6 +1,6 @@
-/*  Name: George Duensing
-    Email: duensing@oregonstate.edu
-    Course: cs344 Operating Systems
+/*  Name:       George Duensing
+    Email:      duensing@oregonstate.edu
+    Course:     cs344 Operating Systems
     Homework 3: smallsh
     In this assignment you will write smallsh your own shell in C. 
     smallsh will implement a subset of features of well-known shells, 
@@ -34,7 +34,11 @@
 */
 
 int main(int argc, char* argv[])
-{   // ref. modules
+{   
+    for(int i = 0; i < 200; i++) // init to zero
+        BG_PROCESSES[i] = -5;	
+
+    // ref. modules
     // signal handlers
     struct sigaction SIGINT_action = {0};               // Initialize SIGINT_action struct to be empty
     SIGINT_action.sa_handler = SIG_IGN;                 // Ignore SIGINT in shell    

@@ -1,6 +1,6 @@
-/*  Name: George Duensing
-    Email: duensing@oregonstate.edu
-    Course: cs344 Operating Systems
+/*  Name:       George Duensing
+    Email:      duensing@oregonstate.edu
+    Course:     cs344 Operating Systems
     Homework 3: smallsh
 */
 #ifndef SMALLSH_H
@@ -11,6 +11,8 @@
 #define BG_PROCESS "&"
 #define COMMENT '#'
 #define DOLLAR '$'
+
+int BG_PROCESSES[200];       // hold background processes
 
 struct input;
 

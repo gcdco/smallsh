@@ -1,6 +1,6 @@
-/*  Name: George Duensing
-    Email: duensing@oregonstate.edu
-    Course: cs344 Operating Systems
+/*  Name: 		George Duensing
+    Email: 		duensing@oregonstate.edu
+    Course: 	cs344 Operating Systems
     Homework 3: smallsh
 */
 
@@ -132,7 +132,15 @@ struct input* initCommandStruct(char *buffer)
 *	postcondition:		exit
 *	return: 			none
 */
-void exit_shell() { exit(0); }
+void exit_shell() { 
+	for(int i = 0; i < 200; i++) { 
+		if(BG_PROCESSES[i] != -5) { 
+			kill(BG_PROCESSES[i],SIGTERM);
+			BG_PROCESSES[i] = -5;
+		} 
+	}  // TODO: <===============<<<<<<<<<<<	
+	exit(0);
+}
 
 /*	Change directory to user specified location, else change to home directory 
 *	params:					command struct w/ optional directory path
@@ -171,7 +179,7 @@ void status(int status)
 */
 void checkBgProcesses(int status)
 {
-	int pid;
+	int pid = -5;
 	do {	// Wait for any child proccess to terminate until parent is returned
 		pid = waitpid(-1, &status, WNOHANG);
 		if(WIFEXITED(status) != 0 && pid > 0) { // Print the exit status if exited
@@ -260,6 +268,7 @@ void Execute(struct input *command, int processStatus)
 		if(command->bg_process == 1 && BG_PROCESS_ALLOWED != 0) {			// Print background pid
 			printf("background pid is %d\n", spawnPid); fflush(stdout);
 			spawnPid = waitpid(spawnPid, &processStatus, WNOHANG);			// Don't wait for the process to return
+			for(int i = 0; i < 200; i++) { if(BG_PROCESSES[i] != -5) { BG_PROCESSES[i] = spawnPid;} }  // TODO: <===============<<<<<<<<<<<
 		}
 		else {
 			spawnPid = waitpid(spawnPid, &processStatus, 0);				// Wait for foreground process to return
